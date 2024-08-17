@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0; /* Remove default margin */
+            background-image: url('Main.png'); /* Background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background */
+        }
+
+        /* Popup menu styles */
+        .popup-container {
+            position: absolute; /* Positioning for top-left corner */
+            top: 20px; /* Distance from the top */
+            left: 20px; /* Distance from the left */
+        }
+
+        #menu-button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.5s; /* Smooth transition */
+        }
+
+        #menu-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .popup-menu {
+            display: none; /* Hidden by default */
+            position: absolute; /* Required to position the menu */
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            margin-top: 5px; /* Space between the button and menu */
+        }
+
+        .popup-menu ul {
+            list-style-type: none;
+            padding: 10px 0;
+            margin: 0;
+            transition-duration: 0.5s;
+        }
+
+        .popup-menu li {
+            padding: 10px 20px;
+            transition-duration: 0.5s;
+        }
+
+        .popup-menu li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            transition-duration: 0.5s;
+        }
+
+        .popup-menu li:hover {
+            background-color: #f1f1f1; /* Change background on hover */
+        }
+    </style>
+
+    <title>Popup Menu Example</title>
+</head>
+
+<body>
+    <div class="popup-container">
+        <button id="menu-button">Open Menu</button>
+        <div class="popup-menu" id="popupMenu">
+            <ul>
+                <li><a href="Chat.html">Chat</a></li>
+                <li><a href="Connect.html">Connect</a></li>
+                <li><a href="ConnectPlus.html">Connect Plus+</a></li>
+                <li><a href="Math.html">Math</a></li>
+                <li><a href="Science.html">Science</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Popup menu functionality
+        const menuButton = document.getElementById('menu-button');
+        const popupMenu = document.getElementById('popupMenu');
+
+        // Toggle the popup menu on button click
+        menuButton.addEventListener('click', function () {
+            popupMenu.style.display = popupMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close the menu if clicked outside of it
+        window.addEventListener('click', function (event) {
+            if (!menuButton.contains(event.target) && !popupMenu.contains(event.target)) {
+                popupMenu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

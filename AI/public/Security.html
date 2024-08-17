@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Page</title>
+    <link rel="stylesheet" href="securitystyle.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container" id="container">
+        <h1 class="title">Enter Password</h1>
+        <div>
+            <input type="password" id="password" class="password-input" placeholder="Enter password">
+            <input type="checkbox" id="togglePassword"> Show Password
+        </div>
+        <button class="submit-button" onclick="checkPassword()">Submit</button>
+        <p id="message" class="message"></p>
+    </div>
+    
+    <script>
+        const correctPassword = "OSC"; // Change this to your desired password
+
+        // Check if access has already been granted
+        if (localStorage.getItem("accessGranted") === "false") {
+            window.location.href = "index.html"; // Change to the destination page
+        }
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password").value;
+            const message = document.getElementById("message");
+
+            if (passwordInput === correctPassword) {
+                message.textContent = "Access Granted, Redirecting in 3 Seconds.";
+                
+                // Store the access granted status
+                localStorage.setItem("accessGranted", "true");
+                
+                // Disable inputs after correct password
+                document.getElementById("password").disabled = true;
+                document.querySelector(".submit-button").disabled = true;
+
+                // Redirect after 5 seconds (5000 milliseconds)
+                setTimeout(() => {
+                    window.location.href = "index.html"; // Change to the desired page you want to redirect to
+                }, 3000);
+            } else {
+                message.textContent = "Incorrect password. Please try again.";
+            }
+        }
+    
+        document.getElementById('togglePassword').addEventListener('change', function () {
+            const passwordInput = document.getElementById('password');
+            if (this.checked) {
+                passwordInput.type = 'text'; // Show password
+            } else {
+                passwordInput.type = 'password'; // Hide password
+            }
+        });
+    </script>
+</body>
+</html>

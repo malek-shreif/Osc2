@@ -1,0 +1,59 @@
+/* securitystyle.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    background-image: url(Home.png);
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the background */
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.password-input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 200px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff; /* Change to your desired color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition-duration: 0.5s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3; /* Darken on hover */
+}
+
+.message {
+    margin-top: 15px;
+    color: #ff0000; /* Error message color */
+    font-weight: bold;
+}

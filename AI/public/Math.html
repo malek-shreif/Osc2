@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('Math.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #home-button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            transition-duration: 0.5s;
+        }
+        #home-button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            position: absolute;
+            right: 250px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #upload-button {
+            display: none;
+        }
+        .upload-label {
+            display: inline-block;
+            width: 250px;
+            height: 150px;
+            border: 2px dotted red; 
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: red;
+            cursor: pointer;
+            text-align: center;
+            font-size: 30px;
+            transition: background-color 0.3s, border-color 0.3s;
+            text-decoration: italic;
+            line-height: 150px;
+        }
+        .upload-label:hover {
+            background-color: #ffe6e6;
+            border-color: #cc0000;
+        }
+        #date, #subject {
+            width: 150px;
+            margin-bottom: 10px;
+            border: 2px dashed red;
+            display: none;
+            border-radius: 5px;
+        }
+        .download-button {
+            display: none;
+            padding: 10px 20px;
+            background-color: rgb(255, 0, 0);
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .download-button:hover {
+            background-color: rgb(221, 22, 22);
+        }
+        .remove-button {
+            display: none;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .remove-button:hover {
+            background-color: #ff3030;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <input type="text" id="date" value="" placeholder="Date: " readonly>
+        <input type="text" id="subject" value="" placeholder="Subject: ">
+
+        <label for="upload-button" class="upload-label">UPLOAD FILE</label>
+        <input type="file" id="upload-button" accept="*/*" onchange="handleFileUpload()">
+
+        <button id="remove-button" class="remove-button" onclick="removeFile()">Remove File</button>
+        <a id="download-button" class="download-button" style="display: none;"></a>
+    </div>
+
+    <script>
+        function handleFileUpload() {
+            const uploadButton = document.getElementById('upload-button');
+            const dateInput = document.getElementById('date');
+            const subjectInput = document.getElementById('subject');
+            const file = uploadButton.files[0];
+
+            if (file) {
+                const currentDate = new Date().toLocaleDateString();
+                const fileData = {
+                    name: file.name,
+                    size: file.size,
+                    date: currentDate,
+                    url: URL.createObjectURL(file)
+                };
+
+                // Store file data in localStorage
+                localStorage.setItem('uploadedFile', JSON.stringify(fileData));
+                updateUI(fileData);
+            } else {
+                clearUI();
+            }
+        }
+
+        function updateUI(fileData) {
+            const currentDate = new Date().toLocaleDateString();
+            document.getElementById('date').value = fileData.date;
+            document.getElementById('date').style.display = 'block';
+            document.getElementById('subject').style.display = 'block';
+
+            // Update the download button with file information
+            const downloadButton = document.getElementById('download-button');
+            downloadButton.href = fileData.url;
+            downloadButton.textContent = 'Download ' + fileData.name;
+            downloadButton.download = fileData.name;  // Set the download attribute
+            downloadButton.style.display = 'inline-block';  // Make visible
+            
+            // Show the remove button
+            document.getElementById('remove-button').style.display = 'block';
+        }
+
+        function removeFile() {
+            const storedFileData = JSON.parse(localStorage.getItem('uploadedFile'));
+            if (storedFileData && storedFileData.url) {
+                URL.revokeObjectURL(storedFileData.url); // Revoke the blob URL
+            }
+            localStorage.removeItem('uploadedFile'); // Remove from local storage
+            clearUI(); // Clear the UI
+        }
+
+        function clearUI() {
+            document.getElementById('date').style.display = 'none';
+            document.getElementById('subject').style.display = 'none';
+            const downloadButton = document.getElementById('download-button');
+            downloadButton.style.display = 'none';  // Hide the download button
+            // Hide the remove button
+            document.getElementById('remove-button').style.display = 'none';
+        }
+
+        function init() {
+            const storedFileData = localStorage.getItem('uploadedFile');
+            if (storedFileData) {
+                const fileData = JSON.parse(storedFileData);
+                updateUI(fileData);
+            }
+        }
+
+        // Initialize the UI on page load
+        window.onload = init;
+    </script>
+    <a id="home-button" href="index.html" target="_blank">Home</a>
+</body>
+</html>
